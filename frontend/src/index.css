@@ -1,0 +1,23 @@
+main {
+  min-height: 80vh;
+}
+
+h3 {
+  padding: 1rem 0;
+}
+
+.rating span {
+  margin: 0.1rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  transition: ease-in-out 0.3s;
+  box-shadow: 4px 4px 5px gray;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  transition: ease-in-out 0.3s;
+  box-shadow: 4px 4px 5px gray;
+}
