@@ -11,6 +11,7 @@ router.get(
   "/",
   AsyncHandler(async (req, res) => {
     const products = await Product.find({});
+    throw new Error("TU VIEJA");
     res.json(products);
   })
 );
