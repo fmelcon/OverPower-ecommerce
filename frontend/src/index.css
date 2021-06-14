@@ -10,14 +10,12 @@ h3 {
   margin: 0.1rem;
 }
 
-.btn:hover {
+.Cardhome:hover {
   transform: translateY(-1px);
   transition: ease-in-out 0.3s;
   box-shadow: 2px 2px 3px gray;
 }
 
-.Cardhome:hover {
-  transform: translateY(-1px);
-  transition: ease-in-out 0.3s;
-  box-shadow: 2px 2px 3px gray;
+.trashicon {
+  color: rgb(204, 26, 26);
 }
