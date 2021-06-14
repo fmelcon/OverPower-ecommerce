@@ -29,7 +29,7 @@ const ProductScreen = ({ match }) => {
       ) : (
         <Row>
           <Col md={6}>
-            <Image src={product.image} alt={product.name} />
+            <Image src={product.image} alt={product.name} fluid />
           </Col>
           <Col md={3}>
             <ListGroup variant="flush">
@@ -68,7 +68,10 @@ const ProductScreen = ({ match }) => {
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Button disabled={product.countInStock === 0} block>
+                  <Button
+                    className="w-100"
+                    disabled={product.countInStock === 0}
+                  >
                     Add To Cart
                   </Button>
                 </ListGroup.Item>
