@@ -6,8 +6,22 @@ h3 {
   padding: 1rem 0;
 }
 
+h1 {
+  font-size: 1.4rem;
+  padding: 0.1rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  padding: 0.5rem 0;
+}
+
 .rating span {
   margin: 0.1rem;
+}
+
+.btn:hover {
+  transform: translateY(1px);
 }
 
 .Cardhome:hover {

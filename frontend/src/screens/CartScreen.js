@@ -21,7 +21,13 @@ const CartScreen = ({ match, location, history }) => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  const removeFromCartHandler = (id) => {};
+  const removeFromCartHandler = (id) => {
+    history.push("/login?redirect=shipping");
+  };
+
+  const checkoutHandler = (id) => {
+    console.log("tu vieja");
+  };
 
   useEffect(() => {
     if (productId) {
@@ -30,7 +36,7 @@ const CartScreen = ({ match, location, history }) => {
   }, [dispatch, productId, qty]);
   return (
     <Row>
-      <Col md={8} fluid>
+      <Col md={8}>
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
           <Message>
@@ -45,7 +51,7 @@ const CartScreen = ({ match, location, history }) => {
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={3}>
-                    <Link to={`/products/${item.product}`}>{item.name}</Link>
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
                   <Col md={2}>${item.price}</Col>
                   <Col md={2}>
@@ -79,8 +85,32 @@ const CartScreen = ({ match, location, history }) => {
             ))}
           </ListGroup>
         )}
-        <Col md={2}></Col>
-        <Col md={2}></Col>
+      </Col>
+      <Col md={4}>
+        <Card>
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              <h2>
+                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                items
+              </h2>
+              $
+              {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Button
+                type="button"
+                className="w-100"
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}
+              >
+                Proceed to checkout
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
       </Col>
     </Row>
   );
