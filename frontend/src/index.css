@@ -28,6 +28,14 @@ h2 {
   transform: translateY(1px);
 }
 
+.title {
+  text-align: center;
+}
+
+label {
+  margin: 0.5rem 0 !important;
+}
+
 .Cardhome:hover {
   transform: translateY(-1px);
   transition: ease-in-out 0.3s;
