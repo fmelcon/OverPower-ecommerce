@@ -26,22 +26,22 @@ const Header = () => {
           <Nav className="ml-auto">
             <LinkContainer to="/cart">
               <Nav.Link>
-                <i className="fas fa-shopping-cart"></i> Cart
+                <i className="fas fa-shopping-cart"></i> Carrito
               </Nav.Link>
             </LinkContainer>
             {userInfo ? (
               <NavDropdown title={userInfo.name} id="username">
                 <LinkContainer to="/profile">
-                  <NavDropdown.Item>Profile</NavDropdown.Item>
+                  <NavDropdown.Item>Perfil</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Item onClick={logOutHandler}>
-                  Logout
+                  Cerrar Sesion
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
               <LinkContainer to="/login">
                 <Nav.Link>
-                  <i className="fas fa-user"></i> Sign In
+                  <i className="fas fa-user"></i> Iniciar Sesion
                 </Nav.Link>
               </LinkContainer>
             )}

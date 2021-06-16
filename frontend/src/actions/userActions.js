@@ -12,7 +12,6 @@ import {
   USER_REGISTER_SUCCES,
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
-  USER_UPDATE_PROFILE_SUCCES,
 } from "../constants/userConstants";
 
 export const login = (email, password) => async (dispatch) => {
