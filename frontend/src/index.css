@@ -21,6 +21,12 @@ h2 {
   color: rgb(37, 119, 196) !important;
 }
 
+.steps {
+  background: rgba(17, 16, 16, 0.719) !important;
+  color: white !important;
+  border-radius: 10px;
+}
+
 .rating span {
   margin: 0.1rem;
 }
