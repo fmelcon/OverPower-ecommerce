@@ -25,7 +25,7 @@ const ProductScreen = ({ history, match }) => {
   return (
     <>
       <Link to="/" className="btn btn-dark rounded my-2">
-        Go Back
+        Atras
       </Link>
       {loading ? (
         <Loader />
@@ -58,7 +58,7 @@ const ProductScreen = ({ history, match }) => {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <Row>
-                    <Col>Price:</Col>
+                    <Col>Precio:</Col>
                     <Col>
                       <strong>${product.price}</strong>
                     </Col>
@@ -66,9 +66,9 @@ const ProductScreen = ({ history, match }) => {
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Status:</Col>
+                    <Col>Stock:</Col>
                     <Col>
-                      {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
+                      {product.countInStock > 0 ? "Hay Stock" : "No hay Stock"}
                     </Col>
                   </Row>
                 </ListGroup.Item>
@@ -98,7 +98,7 @@ const ProductScreen = ({ history, match }) => {
                     className="w-100 rounded"
                     disabled={product.countInStock === 0}
                   >
-                    Add To Cart
+                    Agregar al Carrito
                   </Button>
                 </ListGroup.Item>
               </ListGroup>

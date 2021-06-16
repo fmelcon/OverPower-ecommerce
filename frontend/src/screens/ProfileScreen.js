@@ -63,8 +63,8 @@ const ProfileScreen = ({ location, history }) => {
   return (
     <Row>
       <Col md={3}>
-        <h2>User Profile</h2>
-        {updated && <Message variant="success">Profile Updated</Message>}
+        <h2>Perfil Usuario</h2>
+        {updated && <Message variant="success">Perfil Actualizado!</Message>}
         {message && <Message variant="danger">{message}</Message>}
         {loading ? (
           <Loader />
@@ -73,20 +73,21 @@ const ProfileScreen = ({ location, history }) => {
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="name"
-                placeholder="Enter name"
+                placeholder="Ingresa Nombre"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="email">
-              <Form.Label>Email Address</Form.Label>
+              <Form.Label>Direccion Email</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter email"
+                disabled
+                placeholder="Ingresa email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
@@ -96,14 +97,14 @@ const ProfileScreen = ({ location, history }) => {
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Enter password"
+                placeholder="Ingresa password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="confirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
+              <Form.Label>Confirmar Nueva Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Confirm password"
@@ -112,14 +113,14 @@ const ProfileScreen = ({ location, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Update
+            <Button type="submit" variant="primary" className="w-100 my-3">
+              Actualizar Informacion
             </Button>
           </Form>
         )}
       </Col>
       <Col md={9}>
-        <h2>My Orders</h2>
+        <h2>Mis Ordenes</h2>
       </Col>
     </Row>
   );
