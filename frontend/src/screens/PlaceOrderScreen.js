@@ -9,6 +9,22 @@ const PlaceOrderScreen = () => {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+  // Calculate Prices
+  cart.itemsPrice = cart.cartItems.reduce(
+    (acc, item) => acc + item.price * item.qty,
+    0
+  );
+
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
+
+  cart.taxPrice = addDecimals(Number((0.2 * cart.itemsPrice).toFixed(2)));
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
+  cart.totalPrice = addDecimals(
+    Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
+  );
+
   const placeOrderHandler = () => {
     console.log("compro todo");
   };
@@ -76,25 +92,25 @@ const PlaceOrderScreen = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Productos</Col>
-                  <Col>${cart.itemsPrice}</Col>
+                  <Col>$ {cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Envio</Col>
-                  <Col>${cart.shippingPrice}</Col>
+                  <Col>$ {cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col>Tax</Col>
-                  <Col>${cart.taxPrice}</Col>
+                  <Col>Impuestos</Col>
+                  <Col>$ {cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>${cart.totalPrice}</Col>
+                  <Col>$ {cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -103,7 +119,7 @@ const PlaceOrderScreen = () => {
                   disable={cart.cartItems === 0}
                   onClick={placeOrderHandler}
                   variant="primary"
-                  className="w-100"
+                  className="w-100 rounded"
                 >
                   Realizar Pedido
                 </Button>

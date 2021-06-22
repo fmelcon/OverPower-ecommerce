@@ -11,20 +11,28 @@ h3 {
 }
 
 h1 {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   padding: 0.1rem;
+  font-weight: 600;
+  color: rgb(37, 119, 196) !important;
 }
 
 h2 {
   font-size: 1.3rem;
-  font-weight: 500;
+  font-weight: 600;
   color: rgb(37, 119, 196) !important;
 }
 
 .steps {
-  background: rgba(17, 16, 16, 0.719) !important;
+  background: rgb(37, 119, 196) !important;
   color: white !important;
-  border-radius: 10px;
+  border-radius: 15px;
+}
+
+.steps:disabled {
+  background: rgb(118, 121, 124) !important;
+  color: white !important;
+  border-radius: 15px;
 }
 
 .rating span {
