@@ -31,44 +31,48 @@ const ShippingScreen = ({ history }) => {
           <Form.Label>Direccion</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter address"
+            placeholder="Ingresa Direccion"
             value={address}
             required
             onChange={(e) => setAddress(e.target.value)}
           ></Form.Control>
         </Form.Group>
+
         <Form.Group controlId="city">
           <Form.Label>Ciudad</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter City"
+            placeholder="Ingresa Ciudad"
             value={city}
             required
             onChange={(e) => setCity(e.target.value)}
           ></Form.Control>
         </Form.Group>
+
         <Form.Group controlId="postalCode">
           <Form.Label>Codigo postal</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter PostalCode"
+            placeholder="Ingresa Codigo Postal"
             value={postalCode}
             required
             onChange={(e) => setPostalCode(e.target.value)}
           ></Form.Control>
         </Form.Group>
+
         <Form.Group controlId="country">
           <Form.Label>Pais</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter Country"
+            placeholder="Ingresa Pais"
             value={country}
             required
             onChange={(e) => setCountry(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        <Button type="submit" variant="primary" className="w-100 rounded my-3">
-          Continuar compra
+
+        <Button type="submit" variant="primary" className="rounded">
+          Continuar
         </Button>
       </Form>
     </FormContainer>

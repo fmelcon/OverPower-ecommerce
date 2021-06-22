@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ const LoginScreen = ({ location, history }) => {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
@@ -30,15 +31,15 @@ const LoginScreen = ({ location, history }) => {
 
   return (
     <FormContainer>
-      <h1 className="title">Iniciar Sesion</h1>
+      <h1>Sign In</h1>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
-          <Form.Label>Direccion Email</Form.Label>
+          <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Ingresa Email"
+            placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
@@ -48,22 +49,22 @@ const LoginScreen = ({ location, history }) => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Ingresa Password"
+            placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary" className="w-100 rounded mt-3">
-          Iniciar Sesion
+        <Button type="submit" variant="primary">
+          Sign In
         </Button>
       </Form>
 
       <Row className="py-3">
         <Col>
-          ¿Sos Nuevo?{" "}
+          New Customer?{" "}
           <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-            Registrate Aqui!
+            Register
           </Link>
         </Col>
       </Row>

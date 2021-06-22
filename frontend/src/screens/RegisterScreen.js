@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ const RegisterScreen = ({ location, history }) => {
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
+
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
@@ -30,13 +31,14 @@ const RegisterScreen = ({ location, history }) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
+    } else {
+      dispatch(register(name, email, password));
     }
-    dispatch(register(name, email, password));
   };
 
   return (
     <FormContainer>
-      <h1 className="title">Suscribirse</h1>
+      <h1 className="title">Iniciar Sesion</h1>
       {message && <Message variant="danger">{message}</Message>}
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
@@ -74,23 +76,23 @@ const RegisterScreen = ({ location, history }) => {
         <Form.Group controlId="confirmPassword">
           <Form.Label>Confirma Contraseña</Form.Label>
           <Form.Control
-            type="Password"
+            type="password"
             placeholder="Confirma Contraseña"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary" className="w-100 rounded mt-3">
-          Registrarme
+        <Button type="submit" variant="primary" className="rounded w-100">
+          Registrarse
         </Button>
       </Form>
 
       <Row className="py-3">
         <Col>
-          Tienes una cuenta?{" "}
+          Have an Account?{" "}
           <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-            Log In
+            Login
           </Link>
         </Col>
       </Row>

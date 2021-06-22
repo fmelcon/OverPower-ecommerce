@@ -15,32 +15,35 @@ import { addToCart, removeFromCart } from "../actions/cartActions";
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
+
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-
-  const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id));
-  };
-
-  const checkoutHandler = (id) => {
-    history.push("/login?redirect=shipping");
-  };
 
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
     }
   }, [dispatch, productId, qty]);
+
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
+
+  const checkoutHandler = () => {
+    history.push("/login?redirect=shipping");
+  };
+
   return (
     <Row>
       <Col md={8}>
-        <h1>Carrito de Compras</h1>
+        <h1 className="title">Carrito de Compras</h1>
         {cartItems.length === 0 ? (
           <Message>
-            El carrito esta vacio <Link to="/">Volver al inicio</Link>
+            Tu carrito esta vacio <Link to="/">Click aqui</Link>
           </Message>
         ) : (
           <ListGroup variant="flush">
@@ -73,11 +76,12 @@ const CartScreen = ({ match, location, history }) => {
                   </Col>
                   <Col md={2}>
                     <Button
+                      className="trashicon"
                       type="button"
                       variant="light"
                       onClick={() => removeFromCartHandler(item.product)}
                     >
-                      <i className="fas fa-trash trashicon"></i>
+                      <i className="fas fa-trash"></i>
                     </Button>
                   </Col>
                 </Row>
@@ -90,9 +94,9 @@ const CartScreen = ({ match, location, history }) => {
         <Card>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h2>
+              <h2 className="subtitle">
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                productos
+                Productos
               </h2>
               $
               {cartItems
@@ -101,12 +105,12 @@ const CartScreen = ({ match, location, history }) => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
+                className="rounded w-100"
                 type="button"
-                className="w-100"
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
               >
-                Proceder con la compra
+                Continuar la Compra
               </Button>
             </ListGroup.Item>
           </ListGroup>

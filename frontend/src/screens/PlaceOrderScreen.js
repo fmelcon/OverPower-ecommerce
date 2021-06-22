@@ -1,32 +1,63 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { createOrder } from "../actions/orderActions";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
+import { USER_DETAILS_RESET } from "../constants/userConstants";
 
-const PlaceOrderScreen = () => {
-  const cart = useSelector((state) => state.cart);
+const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
 
-  // Calculate Prices
-  cart.itemsPrice = cart.cartItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
+  const cart = useSelector((state) => state.cart);
 
+  if (!cart.shippingAddress.address) {
+    history.push("/shipping");
+  } else if (!cart.paymentMethod) {
+    history.push("/payment");
+  }
+  //   Calculate prices
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
 
-  cart.taxPrice = addDecimals(Number((0.2 * cart.itemsPrice).toFixed(2)));
-  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
-  cart.totalPrice = addDecimals(
-    Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
+  cart.itemsPrice = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
+  cart.totalPrice = (
+    Number(cart.itemsPrice) +
+    Number(cart.shippingPrice) +
+    Number(cart.taxPrice)
+  ).toFixed(2);
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/order/${order._id}`);
+      dispatch({ type: USER_DETAILS_RESET });
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+    // eslint-disable-next-line
+  }, [history, success]);
 
   const placeOrderHandler = () => {
-    console.log("compro todo");
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -36,22 +67,23 @@ const PlaceOrderScreen = () => {
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h2>Envio</h2>
+              <h2 className="subtitle">Envio</h2>
               <p>
-                <strong>Direccion: </strong>
-                {cart.shippingAddress.country} {cart.shippingAddress.city}{" "}
-                {cart.shippingAddress.address}
+                <strong>Direccion:</strong>
+                {cart.shippingAddress.address}, {cart.shippingAddress.city}{" "}
+                {cart.shippingAddress.postalCode},{" "}
+                {cart.shippingAddress.country}
               </p>
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <h2>Metodo de Pago</h2>
+              <h2 className="subtitle">Metodo de pago</h2>
               <strong>Metodo: </strong>
               {cart.paymentMethod}
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <h2>Productos Seleccionados</h2>
+              <h2 className="subtitle">Orden de Productos</h2>
               {cart.cartItems.length === 0 ? (
                 <Message>El carrito esta vacio</Message>
               ) : (
@@ -59,7 +91,7 @@ const PlaceOrderScreen = () => {
                   {cart.cartItems.map((item, index) => (
                     <ListGroup.Item key={index}>
                       <Row>
-                        <Col md={2}>
+                        <Col md={1}>
                           <Image
                             src={item.image}
                             alt={item.name}
@@ -87,39 +119,41 @@ const PlaceOrderScreen = () => {
           <Card>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h2>Sub Total</h2>
+                <h2 className="subtitle">Resumen de Orden</h2>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Productos</Col>
-                  <Col>$ {cart.itemsPrice}</Col>
+                  <Col>${cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Envio</Col>
-                  <Col>$ {cart.shippingPrice}</Col>
+                  <Col>${cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col>Impuestos</Col>
-                  <Col>$ {cart.taxPrice}</Col>
+                  <Col>Impuesto</Col>
+                  <Col>${cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>$ {cart.totalPrice}</Col>
+                  <Col>${cart.totalPrice}</Col>
                 </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
                   type="button"
-                  disable={cart.cartItems === 0}
+                  className="btn-block rounded"
+                  disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
-                  variant="primary"
-                  className="w-100 rounded"
                 >
                   Realizar Pedido
                 </Button>

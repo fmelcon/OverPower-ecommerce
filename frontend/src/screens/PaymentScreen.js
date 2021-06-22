@@ -9,11 +9,11 @@ const PaymentScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
-  if (!shippingAddress) {
+  if (!shippingAddress.address) {
     history.push("/shipping");
   }
 
-  const [paymentMethod, setPaymentMethod] = useState("Paypal");
+  const [paymentMethod, setPaymentMethod] = useState("PayPal");
 
   const dispatch = useDispatch();
 
@@ -29,31 +29,22 @@ const PaymentScreen = ({ history }) => {
       <h1 className="title">Metodo de pago</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group>
-          <Form.Label as="legend">Elige metodo</Form.Label>
+          <Form.Label as="legend">Elige el metodo</Form.Label>
           <Col>
             <Form.Check
               type="radio"
-              label="PayPal o Tarjeta de Credito"
+              label="PayPal or Credit Card"
               id="PayPal"
               name="paymentMethod"
               value="PayPal"
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
-            <Form.Check
-              type="radio"
-              label="Stripe"
-              id="Stripe"
-              disabled
-              name="paymentMethod"
-              value="Stripe"
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
           </Col>
         </Form.Group>
 
-        <Button type="submit" variant="primary" className="rounded my-3">
-          Continue
+        <Button type="submit" variant="primary" className="rounded">
+          Continuar
         </Button>
       </Form>
     </FormContainer>
